@@ -1,0 +1,77 @@
+
+<!doctype html>
+<html lang ="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Camera Pan-Tilt Controller</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+
+
+      $( function() {
+
+        var left = '{{sliders["left"].value}}'
+        var right = '{{sliders["right"].value}}'
+
+        //show the starting value in input box, so it is not empty onLoad
+        $( "#amount" ).val( left + ", " + right );
+        $( "#comment" ).val( "Drag the sliders" );
+
+        //slider1 and event handler
+        $( "#slider1" ).slider({
+          value: left,
+          min: 0,
+          max: 180,
+          step: 1,
+          slide: function( event, ui ) {
+            left = ui.value;
+            $( "#amount" ).val( left + ", " + right );
+          },
+          change: function( event, ui ) {
+            window.location.assign("/" + left + "/" + right);
+          }
+        });
+
+      //slider2 and event handler
+        $( "#slider2" ).slider({
+          value: right,
+          min: 0,
+          max: 180,
+          step: 1,
+          slide: function( event, ui ) {
+            right = ui.value;
+            $( "#amount" ).val( left + ", " + right );
+          },
+          change: function( event, ui ) {
+            window.location.assign("/" + left + "/" + right);
+          }
+        });
+
+      });
+
+    </script>
+
+
+  </head>
+  <body>
+    <p>
+      <label for="amount">Motors (pan, tilt)</label>
+      <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+    </p>
+    
+    Pan:
+    <div id="slider1" style="margin:15px"></div>
+    Tilt:
+    <div id="slider2" style="margin:15px"></div>
+
+     <p>
+      <label for="comment">CONSOLE:</label>
+      <input type="text" id="comment" readonly style="border:0; color:#f6931f; font-weight:bold;">
+    </p>
+
+ 
+  </body>
+</html>
