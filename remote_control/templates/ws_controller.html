@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Camera Pan-Tilt Controller</title>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
@@ -23,6 +23,7 @@
         //slider1 and event handler
         $( "#slider1" ).slider({
           value: left,
+          orientation: "vertical",
           min: 0,
           max: 180,
           step: 1,
@@ -38,6 +39,7 @@
       //slider2 and event handler
         $( "#slider2" ).slider({
           value: right,
+          
           min: 0,
           max: 180,
           step: 1,
@@ -62,15 +64,17 @@
       <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
     </p>
     
-    Pan:
-    <div id="slider1" style="margin:15px"></div>
-    Tilt:
-    <div id="slider2" style="margin:15px"></div>
 
-     <p>
-      <label for="comment">CONSOLE:</label>
-      <input type="text" id="comment" readonly style="border:0; color:#f6931f; font-weight:bold;">
-    </p>
+    <div style="width:90vw; margin:0 auto; display: table">
+	    <div id="slider1" style="margin:15px; float:left; height:100%; display:block;"/>
+	    <div id="image" style="margin-left:45px; margin-right:15px; float:left;" >
+	    	<img src="http://172.16.92.210:8081" style="width:80vw; height:auto;"/>
+    		<div id="slider2" style="margin-top:15px; width:100%; display:block;"/>
+	    </div>
+
+    </div>
+
+   
 
  
   </body>
