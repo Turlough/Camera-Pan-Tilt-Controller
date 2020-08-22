@@ -13,42 +13,42 @@
 
       $( function() {
 
-        var left = '{{sliders["left"].value}}'
-        var right = '{{sliders["right"].value}}'
+        var tilt = '{{sliders["tilt"].value}}'
+        var pan = '{{sliders["pan"].value}}'
 
         //show the starting value in input box, so it is not empty onLoad
-        $( "#amount" ).val( left + ", " + right );
+        $( "#amount" ).val( tilt + ", " + pan );
         $( "#comment" ).val( "Drag the sliders" );
 
         //slider1 and event handler
-        $( "#slider1" ).slider({
-          value: left,
+        $( "#tilt_slider" ).slider({
+          value: tilt,
           orientation: "vertical",
           min: 0,
           max: 180,
           step: 1,
           slide: function( event, ui ) {
-            left = ui.value;
-            $( "#amount" ).val( left + ", " + right );
+            tilt = ui.value;
+            $( "#amount" ).val( tilt + ", " + pan );
           },
           change: function( event, ui ) {
-            window.location.assign("/" + left + "/" + right);
+            window.location.assign("/" + tilt + "/" + pan);
           }
         });
 
       //slider2 and event handler
-        $( "#slider2" ).slider({
-          value: right,
-          
+        $( "#pan_slider" ).slider({
+          value: pan,
+          orientation: "horizontal",
           min: 0,
           max: 180,
           step: 1,
           slide: function( event, ui ) {
-            right = ui.value;
-            $( "#amount" ).val( left + ", " + right );
+            pan = ui.value;
+            $( "#amount" ).val( tilt + ", " + pan );
           },
           change: function( event, ui ) {
-            window.location.assign("/" + left + "/" + right);
+            window.location.assign("/" + tilt + "/" + pan);
           }
         });
 
@@ -66,16 +66,12 @@
     
 
     <div style="width:90vw; margin:0 auto; display: table">
-	    <div id="slider1" style="margin:15px; float:left; height:100%; display:block;"/>
+	    <div id="tilt_slider" style="margin:15px; float:left; height:100%; display:block;"/>
 	    <div id="image" style="margin-left:45px; margin-right:15px; float:left;" >
 	    	<img src="http://172.16.92.210:8081" style="width:80vw; height:auto;"/>
-    		<div id="slider2" style="margin-top:15px; width:100%; display:block;"/>
+    		<div id="pan_slider" style="margin-top:15px; width:100%; display:block;"/>
 	    </div>
 
     </div>
-
-   
-
- 
   </body>
 </html>

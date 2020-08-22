@@ -11,13 +11,11 @@ topic = 'pan_tilt_controller'
 username = 'turlough'
 password = 'b00lab00la'
 
-# Create a dictionary for pin number, name, and pin state:
-
 sliders = {
-    'left': {'direction': 'forward', 'value': 90},
-    'right': {'direction': 'forward', 'value': 90}
+    'tilt': {'direction': 'forward', 'value': 90},
+    'pan': {'direction': 'forward', 'value': 90}
 }
-# Put the pin dictionary into the template data dictionary:
+
 templateData = {
     'sliders': sliders
 }
@@ -30,15 +28,20 @@ def main():
     return render_template('ws_controller.html', **templateData)
 
 
-@app.route("/<left>/<right>")
-def slider_action(left, right):
+@app.route("/<tilt>/<pan>")
+def slider_action(tilt, pan):
     """
-    Display the main page, with servos in position indicated by 'left' and 'right'.
-    Also publish 'left','right' via mqtt.
+    Re-display the main page, with servos in position indicated by 'tilt' and 'pan'.
+    Also publish tilt and pan values via mqtt.
+
+    This solution is a little janky, in that the entire page reloads (redirects in fact),
+    when sliders are released, forcing a redraw of the camera view.
+    @:param tilt: Up down motion, values 0-180
+    @:param pan: Left right motion, values 0-180
     """
-    sliders['left']['value'] = left
-    sliders['right']['value'] = right
-    mqtt_client.publish(topic, left + ',' + right)
+    sliders['tilt']['value'] = tilt
+    sliders['pan']['value'] = pan
+    mqtt_client.publish(topic, tilt + ',' + pan)
 
     # Along with the pin dictionary, put the message into the template data dictionary:
     template_data = {
