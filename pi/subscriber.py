@@ -15,11 +15,11 @@ user = 'turlough'
 password = 'b00lab00la'
 
 # define pins. On the Pi zero, pins 18 and 12 support PWM on a hardware level. We use 18 and 12 here.
-controller = PanTilt(pan_pin = 18, tilt_pin = 12)
+controller = PanTilt(pan_pin=18, tilt_pin=12)
 
 
 def on_message(mosq, obj, msg):
-    payload = msg.payload.decode("utf-8") 
+    payload = msg.payload.decode("utf-8")
     # print(payload)
     values = payload.split(',')
     print(values)
@@ -31,8 +31,8 @@ def on_connect(client, userdata, flags, rc):
     print("Connected with result code " + str(rc))
     client.subscribe(topic, 0)
 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
     client = mqtt.Client()
     client.on_message = on_message
     client.on_connect = on_connect
