@@ -1,0 +1,7 @@
+{
+  "host": "172.16.92.200",
+  "port": 1883,
+  "topic": "pan_tilt_controller",
+  "username": "turlough",
+  "password": "b00lab00la"
+}

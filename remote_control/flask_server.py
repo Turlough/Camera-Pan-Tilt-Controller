@@ -1,15 +1,12 @@
 import paho.mqtt.client as mqtt
 from flask import Flask, render_template, request
+from json_loader import JsonLoader
 
 app = Flask(__name__)
 mqtt_client = mqtt.Client()
+topic = ''
+config = JsonLoader()
 
-# Replace these with your own configuration
-host = '172.16.92.200'
-port = 1883
-topic = 'pan_tilt_controller'
-username = 'turlough'
-password = 'b00lab00la'
 
 sliders = {
     'tilt': {'direction': 'forward', 'value': 90},
@@ -39,6 +36,8 @@ def slider_action(tilt, pan):
     @:param tilt: Up down motion, values 0-180
     @:param pan: Left right motion, values 0-180
     """
+    global topic
+
     sliders['tilt']['value'] = tilt
     sliders['pan']['value'] = pan
     mqtt_client.publish(topic, tilt + ',' + pan)
@@ -53,8 +52,11 @@ def slider_action(tilt, pan):
 
 def start_mqtt():
     """Connect the mqtt client so it's ready to publish"""
-    mqtt_client.username_pw_set(username, password)
-    mqtt_client.connect(host, port, 60)
+    global topic
+    c = config.from_file('mqtt_config.json')
+    topic = c.topic
+    mqtt_client.username_pw_set(c.username, c.password)
+    mqtt_client.connect(c.host, c.port, 60)
     mqtt_client.loop_start()
 
 
