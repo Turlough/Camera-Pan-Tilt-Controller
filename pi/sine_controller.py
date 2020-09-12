@@ -4,7 +4,7 @@ from time import sleep
 class SineController:
 
     current = 0
-    # summing the roughly sinusoidal series 1,2,3,3,2,1
+    # summing the roughly sinusoidal sequence 1,2,3,3,2,1
     increments = [0, 1, 3, 6, 9, 11, 12]
     num_increments = len(increments)
     max = increments[-1]
@@ -12,11 +12,21 @@ class SineController:
     def __init__(self):
         ...
 
-    def create_steps(self, current, target):
+    def create_steps(self, current, target,):
+        """
+        Given a current and target location, scales the 'increments'
+        list across the interval, and returns the new list.
+
+        :param current: current value.
+        :param target: target value.
+        :return: The scaled list.
+        """
         distance = target - current
         delta = distance / self.max
-        mapper = lambda x: current + x * delta
-        steps = map(mapper, self.increments)
+        steps = map(
+            lambda x: current + x * delta,
+            self.increments
+        )
         return list(steps)
 
     def move(self, target, position_function, sleep_time):

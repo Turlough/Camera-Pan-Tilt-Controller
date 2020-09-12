@@ -1,8 +1,9 @@
-'''
+"""
 Controller for a camera Pan-Tilt assembly.
 Provides PWM for a pair of servos controlling pan and tilt.
 On the Pi zero, pins 18, 12 and 13 support PWM on a hardware level (BCM numbering)
-'''
+"""
+
 from time import sleep
 import RPi.GPIO as GPIO
 from pi.sine_controller import SineController
@@ -12,6 +13,8 @@ class PanTilt(object):
 
     tilt_controller = SineController()
     pan_controller = SineController()
+    tilt = 0
+    pan = 0
 
     def __init__(self, pan_pin, tilt_pin):
         """
@@ -30,8 +33,18 @@ class PanTilt(object):
 
     @staticmethod
     def __set_servo(servo, angle):
+        """
+        Given an angle in degrees, this method sets the PWM duty cycle accordingly.
+
+        :param servo: The servo pin to set the PWM ratio on.
+        :param angle: The angle, in degrees, to set it to.
+        :except: Exception if the angle is not between 0 and 180.
+        """
+        if angle < 0 or angle > 180:
+            raise Exception('Servo angle must be between 0 and 180')
+
         duty_cycle = float(angle) / 18 + 3
-        print('pin %s, angle %s, dutyCycle %.2f' % (servo, angle, duty_cycle))
+        print('pin %s, angle %s, duty cycle %.2f' % (servo, angle, duty_cycle))
         pwm = GPIO.PWM(servo, 500)
         pwm.start(8)
         pwm.ChangeDutyCycle(duty_cycle)

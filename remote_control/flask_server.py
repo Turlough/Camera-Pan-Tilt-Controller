@@ -33,8 +33,8 @@ def slider_action(tilt, pan):
 
     This solution is a little janky, in that the entire page reloads (redirects in fact),
     when sliders are released, forcing a redraw of the camera view.
-    @:param tilt: Up down motion, values 0-180
-    @:param pan: Left right motion, values 0-180
+    :param tilt: Up down motion, values 0-180
+    :param pan: Left right motion, values 0-180
     """
     global topic
 
@@ -51,7 +51,7 @@ def slider_action(tilt, pan):
 
 
 def start_mqtt():
-    """Connect the mqtt client so it's ready to publish"""
+    """Connect the mqtt client so that it's ready to publish"""
     global topic
     c = config.from_file('mqtt_config.json')
     topic = c.topic
