@@ -7,7 +7,7 @@ These represent target degrees for each servo
 import paho.mqtt.client as mqtt
 from servos import PanTilt
 
-# Replace these with your own configuration
+# TODO Replace these with your own configuration
 host = '172.16.92.200'
 port = 1883
 topic = 'pan_tilt_controller'
@@ -23,8 +23,8 @@ def on_message(mosq, obj, msg):
     # print(payload)
     values = payload.split(',')
     print(values)
-    controller.pan(values[0])
-    controller.tilt(values[1])
+    controller.pan_degrees(values[0])
+    controller.tilt_degrees(values[1])
 
 
 def on_connect(client, userdata, flags, rc):

@@ -13,8 +13,8 @@ class PanTilt(object):
 
     tilt_controller = SineController()
     pan_controller = SineController()
-    tilt = 0
-    pan = 0
+    tilt_degrees = 0
+    pan_degrees = 0
 
     def __init__(self, pan_pin, tilt_pin):
         """
@@ -32,19 +32,19 @@ class PanTilt(object):
         print('PanTilt initialized, pan_pin is %s, tilt_pin is %s' % (self.pan_pin, self.tilt_pin))
 
     @staticmethod
-    def __set_servo(servo, angle):
+    def __set_servo(servo, degrees):
         """
         Given an angle in degrees, this method sets the PWM duty cycle accordingly.
 
         :param servo: The servo pin to set the PWM ratio on.
-        :param angle: The angle, in degrees, to set it to.
+        :param degrees: The angle, in degrees, to set it to.
         :except: Exception if the angle is not between 0 and 180.
         """
-        if angle < 0 or angle > 180:
+        if not 0 < degrees < 180:
             raise Exception('Servo angle must be between 0 and 180')
 
-        duty_cycle = float(angle) / 18 + 3
-        print('pin %s, angle %s, duty cycle %.2f' % (servo, angle, duty_cycle))
+        duty_cycle = float(degrees) / 18 + 3
+        print('pin %s, angle %s, duty cycle %.2f' % (servo, degrees, duty_cycle))
         pwm = GPIO.PWM(servo, 500)
         pwm.start(8)
         pwm.ChangeDutyCycle(duty_cycle)
@@ -55,14 +55,14 @@ class PanTilt(object):
         """
         Pan to this angle (degrees)
         """
-        self.pan = angle
-        self.__set_servo(self.pan_pin, self.pan)
+        self.pan_degrees = angle
+        self.__set_servo(self.pan_pin, self.pan_degrees)
 
     def tilt(self, angle):
         """
         Tilt to this angle (degrees)
         """
-        self.tilt = angle
-        self.__set_servo(self.tilt_pin, self.tilt)
+        self.tilt_degrees = angle
+        self.__set_servo(self.tilt_pin, self.tilt_degrees)
 
 
