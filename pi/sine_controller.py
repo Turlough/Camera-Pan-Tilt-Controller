@@ -8,9 +8,10 @@ class SineController:
     increments = [0, 1, 3, 6, 9, 11, 12]
     num_increments = len(increments)
     max = increments[-1]
+    servo = None
 
-    def __init__(self):
-        ...
+    def __init__(self, servo):
+        self.servo = servo
 
     def create_steps(self, current, target):
         """
@@ -29,21 +30,23 @@ class SineController:
         )
         return list(steps)
 
-    def move(self, target, position_function, duration):
+    def move(self, target, duration):
         """
         Pass this the servo's PWM function and a target position.
         It will invoke the PWM function smoothly until
         the target position is reached.
 
         :param target: The desired end position of the servo.
-        :param position_function: The function that moves the servo, e.g. a PWM function.
         :param duration: Duration of the movement. A short duration makes for a jerky movement.
         :return: None
         """
         sleep_time = duration / self.num_increments
         steps = self.create_steps(self.current, target)
+
+        self.servo.start()
         for i in range(self.num_increments):
             step = steps[i]
-            position_function(step)
+            self.servo.move_to(step)
             self.current = step
             sleep(sleep_time)
+        self.servo.stop()

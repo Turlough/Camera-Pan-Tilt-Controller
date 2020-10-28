@@ -5,24 +5,24 @@ Expected message format is 'pan,tilt' where both values >0 and <180.
 These represent target degrees for each servo
 """
 import paho.mqtt.client as mqtt
-from servos import PanTilt
+from pi.pan_tilt_controller import PanTiltController
 from json_loader import JsonLoader
 
 config = JsonLoader()
 topic = ''
 
 # define pins. On the Pi zero, pins 18 and 12 support PWM on a hardware level. We use 18 and 12 here.
-controller = PanTilt(pan_pin=18, tilt_pin=12)
+controller = PanTiltController(pan_pin=18, tilt_pin=12)
 
 
 def on_message(mosq, obj, msg):
 
     payload = msg.payload.decode("utf-8")
     # print(payload)
-    values = payload.split(',')
-    print(values)
-    controller.pan_degrees(values[0])
-    controller.tilt_degrees(values[1])
+    pan, tilt = payload.split(',')
+    print(pan, tilt)
+    controller.pan(pan)
+    controller.tilt(tilt)
 
 
 def on_connect(client, userdata, flags, rc):
