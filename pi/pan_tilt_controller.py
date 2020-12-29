@@ -1,5 +1,5 @@
-from pi.servo import Servo
-from pi.sine_controller import SineController
+from servo import Servo
+from sine_controller import SineController
 
 
 class PanTiltController(object):

@@ -7,7 +7,7 @@ On the Pi zero, pins 18, 12 and 13 support PWM on a hardware level (BCM numberin
 from time import sleep
 import RPi.GPIO as GPIO
 import time
-from pi.sine_controller import SineController
+from sine_controller import SineController
 
 
 class Servo:

@@ -1,5 +1,7 @@
 import paho.mqtt.client as mqtt
 from flask import Flask, render_template, request
+import sys
+sys.path.append('../')
 from json_loader import JsonLoader
 
 app = Flask(__name__)
@@ -21,7 +23,7 @@ templateData = {
 @app.route("/")
 def main():
     """Display the main page, with no servo data yet"""
-    mqtt_client.publish(topic, 'server message')
+    # mqtt_client.publish(topic, 'server message')
     return render_template('ws_controller.html', **templateData)
 
 
@@ -41,7 +43,7 @@ def slider_action(tilt, pan):
     sliders['tilt']['value'] = tilt
     sliders['pan']['value'] = pan
     mqtt_client.publish(topic, tilt + ',' + pan)
-
+    print('published', tilt, pan)
     # Along with the pin dictionary, put the message into the template data dictionary:
     template_data = {
         'sliders': sliders
@@ -53,7 +55,7 @@ def slider_action(tilt, pan):
 def start_mqtt():
     """Connect the mqtt client so that it's ready to publish"""
     global topic
-    c = config.from_file('mqtt_config.json')
+    c = config.from_file('../mqtt_config.json')
     topic = c.topic
     mqtt_client.username_pw_set(c.username, c.password)
     mqtt_client.connect(c.host, c.port, 60)

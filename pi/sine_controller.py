@@ -40,13 +40,16 @@ class SineController:
         :param duration: Duration of the movement. A short duration makes for a jerky movement.
         :return: None
         """
-        sleep_time = duration / self.num_increments
+        sleep_time = float(duration) / self.num_increments
         steps = self.create_steps(self.current, target)
 
         self.servo.start()
+        print('Move to', target, duration, sleep_time)
         for i in range(self.num_increments):
             step = steps[i]
             self.servo.move_to(step)
             self.current = step
+            print('self.current', self.current)
             sleep(sleep_time)
         self.servo.stop()
+        print('Moved to', target)
